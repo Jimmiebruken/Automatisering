@@ -7,10 +7,11 @@ namespace mongoDBDemo
 {
     public class TrafikverketModel
     {
-        
         [BsonId]
         public Guid Id { get; set; }
-        
+        public string Response { get; set; }
+        public string Result { get; set; }
+
         public string AdvertisedLocationName { get; set; }
         public string LocationSignature { get; set; }
 

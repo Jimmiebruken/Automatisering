@@ -1,4 +1,7 @@
-﻿using System;
+﻿using MongoDB.Bson;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
@@ -31,7 +34,8 @@ namespace mongoDBDemo
      
         }
 
-        public static async Task<TrafikverketModel> PostTrafikVerket(HttpContent data)
+        public static async void PostTrafikVerket(HttpContent data)
+
         {
             string url = "https://api.trafikinfo.trafikverket.se/v2/data.json";
             using (HttpResponseMessage response = await ApiHelper.ApiClient.PostAsync(url, data))
@@ -39,15 +43,37 @@ namespace mongoDBDemo
                 if (response.IsSuccessStatusCode)
                 {
                     // fel verkar uppstå när datan ska hämtas som modell
-                    TrafikverketModel trafikverket = await response.Content.ReadAsAsync<TrafikverketModel>();
-                    Console.WriteLine("kontakt OK!");
+                    //TrafikverketModel trafikverket = await response.Content.ReadAsAsync<TrafikverketModel>();
+                    //Console.WriteLine("kontakt OK!");
 
                     // Detta test visar om data hämtas
-                    //string test = await response.Content.ReadAsStringAsync();
-                    //Console.WriteLine(test);
+                    string test = await response.Content.ReadAsStringAsync();
+                    JObject x = JObject.Parse(test);
+                    //Console.WriteLine(x["RESPONSE"]["RESULT"]);
+
+                    
+                    var y = x.SelectToken("RESPONSE");
+
+                    var result = y.SelectToken("RESULT")[0].SelectToken("TrainStation");
+                    
+
+                    MongoCRUD db = new MongoCRUD("testloop");
+
+                    foreach (var z in result)
+                    {
+                        TrafikverketModel model = new TrafikverketModel();
+
+                        model.AdvertisedLocationName = z[key: "AdvertisedLocationName"].ToString();
+                        model.LocationSignature = z[key: "LocationSignature"].ToString();
+
+                        // Fortsättning på kod, läs upp från databasen för att kolla efter dubbleter i DB 
+
+                        db.InsertRecord("test-tabel", model);
+
+                    }
 
 
-                    return trafikverket;
+                    
                 }
                 else
                 {

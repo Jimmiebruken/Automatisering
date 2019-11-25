@@ -9,11 +9,11 @@ namespace mongoDBDemo
     class Program
     {
 
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
             MongoCRUD db = new MongoCRUD("AddressBook");
             
-            // startar en webclient
+            //startar en webclient
             ApiHelper.InitializeClient();
             string apikey = "'6bb34852b5b140e69f3eec606ea04220'";
 
@@ -36,8 +36,18 @@ namespace mongoDBDemo
 
 
             //Console.WriteLine(TrafikverketProcessor.PostTrafikVerket(query));
-            db.InsertRecord("test", TrafikverketProcessor.PostTrafikVerket(query));
+            TrafikverketProcessor.PostTrafikVerket(query);
+            
 
+
+
+            //ApiHelper.InitializeClientVastTrafik();
+
+            //db.InsertRecord("test", VastTrafik.LoadVastTrafik());
+            //Console.WriteLine(VastTrafik.LoadVastTrafik());
+
+
+            // Ligger endast för att blocka körningen från avslut ( för att kolla fel/ok medelanden)
             Console.ReadLine();
 
         }
@@ -46,14 +56,6 @@ namespace mongoDBDemo
 
     }
 
-    // testmodell för att kolla db kontakt
-    public class PersonModel
-    {
-        [BsonId]
-        public Guid Id { get; set; }
-        public string Firstname { get; set; }
-        public string LastName { get; set; }
-    }
 
     // MongoCRUD sköter kontakten med DB, OBS! DB IP är satt till LAN!
     public class MongoCRUD
