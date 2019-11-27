@@ -9,7 +9,7 @@ namespace mongoDBDemo
     {
 
         // Modell som används sen när data skickas till MongoDB, Värden som sätts här men inte skickas med till MongoDB får värdet null
-
+        // !OBS! Packa upp array med forloop, array/list in i db skapar krash
         [BsonId]
         public Guid Id { get; set; }
         
@@ -22,10 +22,10 @@ namespace mongoDBDemo
 
     public class TrafikverketModelTrainMessage
     {
+        
 
         public string EventId { get; set; }
 
-        public string StationsSignatur { get; set; }
 
         public string Header { get; set; }
 
@@ -38,9 +38,9 @@ namespace mongoDBDemo
         public DateTime EndDateTime { get; set; }
 
         public string ModifiedTime { get; set; }
-
-        public Array TrafficImpactAffectedLocation { get; set; }
-
+        
+        public List<string> AffectedLocation { get; set; }
+        
 
 
     }

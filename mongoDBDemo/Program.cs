@@ -15,34 +15,17 @@ namespace mongoDBDemo
             
             //startar en webclient
             ApiHelper.InitializeClient();
-            string apikey = "'6bb34852b5b140e69f3eec606ea04220'";
-
-            // sätter query i en string
-            string quearyString = "<REQUEST>" +
-                                        // Use your valid authenticationkey
-                                        "<LOGIN authenticationkey=" + apikey + "/>" +
-                                        "<QUERY objecttype='TrainStation' schemaversion='1'>" +
-                                            "<FILTER>" +
-                                                "<IN name='CountyNo' value='14'/>" +
-                                            "</FILTER>" +
-                                            "<INCLUDE>AdvertisedLocationName</INCLUDE>" +
-                                            "<INCLUDE>LocationSignature</INCLUDE>" +
-                                            "<INCLUDE>LocationInformationText</INCLUDE>" +
-                                        "</QUERY>" +
-                                    "</REQUEST>";
-
-            // sätter query i formatet för http body request
-            StringContent query = new StringContent(quearyString);
 
 
-            //Console.WriteLine(TrafikverketProcessor.PostTrafikVerket(query));
-            TrafikverketProcessor.PostTrafikVerket(query);
-            
+            //Kalla på metoden postrafikverket
+            //TrafikverketProcessor.PostTrafikVerket(Query.TrainStation());
 
+            TrafikverketProcessor.PostTrainMessage(Query.TrainMessage());
 
 
             //ApiHelper.InitializeClientVastTrafik();
 
+            // ändra västrafiks anrop
             //db.InsertRecord("test", VastTrafik.LoadVastTrafik());
             //Console.WriteLine(VastTrafik.LoadVastTrafik());
 
@@ -57,7 +40,7 @@ namespace mongoDBDemo
     }
 
 
-    // MongoCRUD sköter kontakten med DB, OBS! DB IP är satt till LAN!
+    // MongoCRUD sköter kontakten med DB, OBS! DB IP är satt till LAN! Public MONGODB IP är 78.67.178.206
     public class MongoCRUD
     {
         private IMongoDatabase db;
