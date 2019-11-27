@@ -42,24 +42,17 @@ namespace mongoDBDemo
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    // fel verkar uppstå när datan ska hämtas som modell
-                    //TrafikverketModel trafikverket = await response.Content.ReadAsAsync<TrafikverketModel>();
-                    //Console.WriteLine("kontakt OK!");
-
-                    // Detta test visar om data hämtas
-                    string test = await response.Content.ReadAsStringAsync();
-                    JObject x = JObject.Parse(test);
-                    //Console.WriteLine(x["RESPONSE"]["RESULT"]);
-
                     
-                    var y = x.SelectToken("RESPONSE");
+                    string fromTrafikverket = await response.Content.ReadAsStringAsync();
+                    JObject jsonObject = JObject.Parse(fromTrafikverket);
 
-                    var result = y.SelectToken("RESULT")[0].SelectToken("TrainStation");
+
+                    // json objectet från trafikverket har strukturen ("RESPONSE") ("RESULT") [ ("TrainStation") ]
                     
-
-                    MongoCRUD db = new MongoCRUD("testloop");
-
-                    foreach (var z in result)
+                    var trainStations = jsonObject.SelectToken("RESPONSE").SelectToken("RESULT")[0].SelectToken("TrainStation");
+                    
+                    MongoCRUD db = new MongoCRUD("admin");
+                    foreach (var z in trainStations)
                     {
                         TrafikverketModel model = new TrafikverketModel();
 
@@ -68,12 +61,10 @@ namespace mongoDBDemo
 
                         // Fortsättning på kod, läs upp från databasen för att kolla efter dubbleter i DB 
 
-                        db.InsertRecord("test-tabel", model);
+                        db.InsertRecord("Station", model);
 
                     }
 
-
-                    
                 }
                 else
                 {
