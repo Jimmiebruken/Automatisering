@@ -2,18 +2,24 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Drawing;
 
 namespace mongoDBDemo
 {
-    class VastTrafikModel
+    class VastTrafikModelTrafficSituation
     {
+        public string situationNumber { get; set; }
+        public string title { get; set; }
 
-        [BsonId]
-        public Guid Id { get; set; }
         
 
-        public string SituationNumber { get; set; }
-        public string CreationTime { get; set; }
-
     }
+
+    class VastTrafikModelLocation
+    {
+        public Point GeometryWGS84 { get; set; }
+    }
+
 }
+
+

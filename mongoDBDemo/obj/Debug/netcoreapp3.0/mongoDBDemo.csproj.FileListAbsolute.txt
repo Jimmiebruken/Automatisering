@@ -18,3 +18,23 @@ C:\Users\Burken\source\repos\mongoDBDemoApp\mongoDBDemo\obj\Debug\netcoreapp3.0\
 C:\Users\Burken\source\repos\mongoDBDemoApp\mongoDBDemo\bin\Debug\netcoreapp3.0\System.Net.Http.Formatting.dll
 C:\Users\Burken\source\repos\mongoDBDemoApp\mongoDBDemo\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
 C:\Users\Burken\source\repos\mongoDBDemoApp\mongoDBDemo\bin\Debug\netcoreapp3.0\Newtonsoft.Json.Bson.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\mongoDBDemo.exe
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\mongoDBDemo.deps.json
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\mongoDBDemo.runtimeconfig.json
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\mongoDBDemo.runtimeconfig.dev.json
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\mongoDBDemo.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\mongoDBDemo.pdb
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\DnsClient.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\System.Net.Http.Formatting.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\MongoDB.Bson.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\MongoDB.Driver.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\MongoDB.Driver.Core.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\Newtonsoft.Json.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\Newtonsoft.Json.Bson.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\bin\Debug\netcoreapp3.0\SharpCompress.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.csprojAssemblyReference.cache
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.AssemblyInfoInputs.cache
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.AssemblyInfo.cs
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.csproj.CopyComplete
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.dll
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\MongoDB\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.pdb
