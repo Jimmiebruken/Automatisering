@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace mongoDBDemo
 {
-    class VastTrafik
+    class VastTrafikProcessor
     {
         public static async Task<VastTrafikModel> LoadVastTrafik()
         {
