@@ -23,7 +23,7 @@ namespace mongoDBDemo
 
                     JArray trafficSituation = JArray.Parse(fromVastTrafik);
 
-                    Console.WriteLine(trafficSituation[0]);
+                    //Console.WriteLine(trafficSituation[0].Type);
 
                     MongoCRUD db = new MongoCRUD("admin");
 
@@ -38,8 +38,26 @@ namespace mongoDBDemo
                         model.severity = traffic[key: "severity"].ToString();
                         model.title = traffic[key: "title"].ToString();
                         model.description = traffic[key: "description"].ToString();
-                        //model.affectedStopPoints = traffic[key: "affectedStopPoints[0]"].ToObject<List<string>>();
+                        try
+                        {
+                            var stopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
+                            Console.WriteLine(stopPoints);
+                            //foreach (var i in stopPoints)
+                            //{
 
+                               // model.affectedStopPoints = i.ToObject<List<string>>();
+                                //Console.WriteLine(i);
+                            //}
+                        }
+                        catch
+                        {
+                            break;
+                        }
+                        
+
+                        
+                        //model.affectedStopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
+                        //Console.WriteLine(traffic[key: "affectedStopPoints"][0].SelectToken("name"));
                         db.InsertRecord("Traffic-Situations", model);
                     }
                 }
