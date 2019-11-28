@@ -11,28 +11,7 @@ namespace mongoDBDemo
 {
     class TrafikverketProcessor
     {
-        public async Task<TrafikverketModel> LoadTrafikVerket()
-        {
-            string url = "https://api.trafikinfo.trafikverket.se/v2/data.json";
 
-
-        using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
-            {
-                if (response.IsSuccessStatusCode)
-                {
-                    TrafikverketModel trafikverket = await response.Content.ReadAsAsync<TrafikverketModel>();
-
-                    return trafikverket;
-                }
-                else
-                {
-                    
-                    throw new Exception(response.ReasonPhrase);
-                    
-                }
-            }
-     
-        }
 
         public static async void PostTrafikVerket(HttpContent data)
 
