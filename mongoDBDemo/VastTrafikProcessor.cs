@@ -3,38 +3,72 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace mongoDBDemo
 {
     class VastTrafikProcessor
     {
-        public static async Task<VastTrafikModel> LoadVastTrafik()
+        public static async void GetTrafficSituation()
         {
             string url = "https://api.vasttrafik.se/ts/v1/traffic-situations";
-
-
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    VastTrafikModel vastTrafik = await response.Content.ReadAsAsync<VastTrafikModel>();
+                    string fromVastTrafik = await response.Content.ReadAsStringAsync();
 
-                    return vastTrafik;
+
+                    JArray trafficSituation = JArray.Parse(fromVastTrafik);
+
+                    //Console.WriteLine(trafficSituation[0].Type);
+
+                    MongoCRUD db = new MongoCRUD("admin");
+
+                    foreach (var traffic in trafficSituation)
+                    {
+                        VastTrafikModelTrafficSituation model = new VastTrafikModelTrafficSituation();
+
+                        model.situationNumber = traffic[key: "situationNumber"].ToString();
+                        model.creationTime = traffic[key: "creationTime"].ToObject<DateTime>();
+                        model.startTime = traffic[key: "startTime"].ToObject<DateTime>();
+                        model.endTime = traffic[key: "endTime"].ToObject<DateTime>();
+                        model.severity = traffic[key: "severity"].ToString();
+                        model.title = traffic[key: "title"].ToString();
+                        model.description = traffic[key: "description"].ToString();
+                        try
+                        {
+                            var stopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
+                            Console.WriteLine(stopPoints);
+                            //foreach (var i in stopPoints)
+                            //{
+
+                               // model.affectedStopPoints = i.ToObject<List<string>>();
+                                //Console.WriteLine(i);
+                            //}
+                        }
+                        catch
+                        {
+                            break;
+                        }
+                        
+
+                        
+                        //model.affectedStopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
+                        //Console.WriteLine(traffic[key: "affectedStopPoints"][0].SelectToken("name"));
+                        db.InsertRecord("Traffic-Situations", model);
+                    }
                 }
                 else
                 {
-
+                    Console.Write("Fel vid kontakt med API");
                     throw new Exception(response.ReasonPhrase);
 
                 }
             }
 
         }
-
-
-
-
-
-
     }
 }

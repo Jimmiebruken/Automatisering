@@ -29,12 +29,7 @@ namespace mongoDBDemo
             ApiClient = new HttpClient();
             ApiClient.DefaultRequestHeaders.Accept.Clear();
 
-            ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "e9a67f34-5e27-3195-a469-1a1cb5b2c556");
-
-            // krash om denna används
-            //ApiClient.DefaultRequestHeaders.Add("content-type", "application/json");
-
-
+            ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "eab5efb6-fa11-30e8-826f-ea7828262e74");
 
         }
 
