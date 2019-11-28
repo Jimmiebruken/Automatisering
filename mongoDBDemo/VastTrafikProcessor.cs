@@ -21,18 +21,24 @@ namespace mongoDBDemo
                     string fromVastTrafik = await response.Content.ReadAsStringAsync();
 
 
-                    JArray i = JArray.Parse(fromVastTrafik);
+                    JArray trafficSituation = JArray.Parse(fromVastTrafik);
 
-                    Console.WriteLine(i[0].Type);
+                    Console.WriteLine(trafficSituation[0]);
 
                     MongoCRUD db = new MongoCRUD("admin");
 
-                    foreach (var sit in i)
+                    foreach (var traffic in trafficSituation)
                     {
                         VastTrafikModelTrafficSituation model = new VastTrafikModelTrafficSituation();
 
-                        model.situationNumber = sit[key: "situationNumber"].ToString();
-                        model.title = sit[key: "title"].ToString();
+                        model.situationNumber = traffic[key: "situationNumber"].ToString();
+                        model.creationTime = traffic[key: "creationTime"].ToObject<DateTime>();
+                        model.startTime = traffic[key: "startTime"].ToObject<DateTime>();
+                        model.endTime = traffic[key: "endTime"].ToObject<DateTime>();
+                        model.severity = traffic[key: "severity"].ToString();
+                        model.title = traffic[key: "title"].ToString();
+                        model.description = traffic[key: "description"].ToString();
+                        //model.affectedStopPoints = traffic[key: "affectedStopPoints[0]"].ToObject<List<string>>();
 
                         db.InsertRecord("Traffic-Situations", model);
                     }
@@ -46,11 +52,5 @@ namespace mongoDBDemo
             }
 
         }
-
-
-
-
-
-
     }
 }
