@@ -1,6 +1,7 @@
 ﻿using MongoDB.Bson.Serialization.Attributes;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Text;
 
 namespace mongoDBDemo
@@ -31,7 +32,7 @@ namespace mongoDBDemo
 
         public string ExternalDescription { get; set; }
 
-        public string GeometryWGS84 { get; set; }
+        public PointF GeometryWGS84 { get; set; }
 
         public DateTime StartDateTime { get; set; }
 
