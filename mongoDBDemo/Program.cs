@@ -20,7 +20,8 @@ namespace mongoDBDemo
             //Kalla på metoden postrafikverket
             //TrafikverketProcessor.PostTrafikVerket(Query.TrainStation());
 
-            VastTrafikProcessor.GetTrafficSituation();
+            //VastTrafikProcessor.GetTrafficSituation();
+           VastTrafikProcessor.GetLocationName();
 
 
             // ändra västrafiks anrop
@@ -32,9 +33,6 @@ namespace mongoDBDemo
             Console.ReadLine();
 
         }
-
-
-
     }
 
 
