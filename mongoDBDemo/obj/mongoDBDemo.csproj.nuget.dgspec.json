@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Victor\\OneDrive\\KYH - TT18\\07 Testautomatisering\\_CASE\\MongoDB Master\\MongoDB\\mongoDBDemo\\mongoDBDemo.csproj": {}
+    "C:\\Users\\Burken\\source\\repos\\Vastrafik\\mongoDBDemo\\mongoDBDemo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Victor\\OneDrive\\KYH - TT18\\07 Testautomatisering\\_CASE\\MongoDB Master\\MongoDB\\mongoDBDemo\\mongoDBDemo.csproj": {
+    "C:\\Users\\Burken\\source\\repos\\Vastrafik\\mongoDBDemo\\mongoDBDemo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Victor\\OneDrive\\KYH - TT18\\07 Testautomatisering\\_CASE\\MongoDB Master\\MongoDB\\mongoDBDemo\\mongoDBDemo.csproj",
+        "projectUniqueName": "C:\\Users\\Burken\\source\\repos\\Vastrafik\\mongoDBDemo\\mongoDBDemo.csproj",
         "projectName": "mongoDBDemo",
-        "projectPath": "C:\\Users\\Victor\\OneDrive\\KYH - TT18\\07 Testautomatisering\\_CASE\\MongoDB Master\\MongoDB\\mongoDBDemo\\mongoDBDemo.csproj",
-        "packagesPath": "C:\\Users\\Victor\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Victor\\OneDrive\\KYH - TT18\\07 Testautomatisering\\_CASE\\MongoDB Master\\MongoDB\\mongoDBDemo\\obj\\",
+        "projectPath": "C:\\Users\\Burken\\source\\repos\\Vastrafik\\mongoDBDemo\\mongoDBDemo.csproj",
+        "packagesPath": "C:\\Users\\Burken\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Burken\\source\\repos\\Vastrafik\\mongoDBDemo\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Victor\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Burken\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
