@@ -92,8 +92,11 @@ namespace mongoDBDemo
                         model.name = locationName[key: "name"].ToString();
                         model.lon = locationName[key: "lon"].ToObject<float>();
                         model.lat = locationName[key: "lat"].ToObject<float>();
+                        Console.WriteLine(locationName[key: "name"]);
+                        Console.WriteLine(locationName[key: "lon"]);
+                        Console.WriteLine(locationName[key: "lat"]);
 
-                        db.InsertRecord("Locations_test", model);
+                    db.InsertRecord("Locations_test", model);
                    // }
                 }
                 else
