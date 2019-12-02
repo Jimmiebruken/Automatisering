@@ -8,22 +8,21 @@ namespace mongoDBDemo
 {
     class Program
     {
-
+        //test
         static async Task Main(string[] args)
         {
-            MongoCRUD db = new MongoCRUD("AddressBook");
+            MongoCRUD db = new MongoCRUD("admin");
 
             //startar en webclient
-            ApiHelper.InitializeClient();
+            ApiHelper.InitializeClientVastTrafik();
 
 
             //Kalla på metoden postrafikverket
-            TrafikverketProcessor.PostTrainStation(Query.TrainStation());
+            //TrafikverketProcessor.PostTrafikVerket(Query.TrainStation());
 
-            //TrafikverketProcessor.PostTrainMessage(Query.TrainMessage());
+            //VastTrafikProcessor.GetTrafficSituation();
+           VastTrafikProcessor.GetLocationName();
 
-
-            //ApiHelper.InitializeClientVastTrafik();
 
             // ändra västrafiks anrop
             //db.InsertRecord("test", VastTrafik.LoadVastTrafik());
@@ -34,9 +33,6 @@ namespace mongoDBDemo
             Console.ReadLine();
 
         }
-
-
-
     }
 
 
@@ -47,7 +43,7 @@ namespace mongoDBDemo
 
         public MongoCRUD(string database)
         {
-            var client = new MongoClient("mongodb://192.168.1.66:27017/admin");
+            var client = new MongoClient("mongodb://localhost:27017/admin");
             db = client.GetDatabase(database);
 
         }
