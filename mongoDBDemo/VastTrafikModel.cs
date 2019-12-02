@@ -23,13 +23,14 @@ namespace mongoDBDemo
 
         public List<string> affectedStopPoints { get; set; }
 
-
-
     }
 
     class VastTrafikModelLocation
     {
-        public Point GeometryWGS84 { get; set; }
+        public string name { get; set; }
+        public float lon { get; set; }
+        public float lat { get; set; }
+
     }
 
 }

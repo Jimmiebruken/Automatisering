@@ -20,7 +20,6 @@ namespace mongoDBDemo
                 {
                     string fromVastTrafik = await response.Content.ReadAsStringAsync();
 
-
                     JArray trafficSituation = JArray.Parse(fromVastTrafik);
 
                     //Console.WriteLine(trafficSituation[0].Type);
@@ -38,26 +37,26 @@ namespace mongoDBDemo
                         model.severity = traffic[key: "severity"].ToString();
                         model.title = traffic[key: "title"].ToString();
                         model.description = traffic[key: "description"].ToString();
-                        try
-                        {
-                            var stopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
-                            Console.WriteLine(stopPoints);
-                            //foreach (var i in stopPoints)
-                            //{
+                        // try
+                        //{
+                        //  var stopPoints = traffic[key: "affectedStopPoints"].ToObject<List<string>>();
+                        //Console.WriteLine(traffic[key: "affectedStopPoints"].ToObject<List<string>>());
 
-                               // model.affectedStopPoints = i.ToObject<List<string>>();
-                                //Console.WriteLine(i);
-                            //}
-                        }
-                        catch
-                        {
-                            break;
-                        }
-                        
+                        // foreach (var i in stopPoints)
+                        //{
 
-                        
+                        //  model.affectedStopPoints = i.ToObject<List<string>>();
+                        //Console.WriteLine(i);
+                        //}
+                        // }
+                        //catch
+                        //{
+                        //  break;
+                        // }
+
                         //model.affectedStopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
-                        //Console.WriteLine(traffic[key: "affectedStopPoints"][0].SelectToken("name"));
+
+                       
                         db.InsertRecord("Traffic-Situations", model);
                     }
                 }
@@ -69,6 +68,44 @@ namespace mongoDBDemo
                 }
             }
 
+        }
+        public static async void GetLocationName()
+        {
+            string url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=sanneg%C3%A5rdshamnen&format=json";
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
+            {
+                if (response.IsSuccessStatusCode)
+                {
+                    string fromVastTrafik = await response.Content.ReadAsStringAsync();
+                    JObject jsonObject = JObject.Parse(fromVastTrafik);
+
+                    var locationName = jsonObject.SelectToken("LocationList").SelectToken("StopLocation")[0];
+                    Console.WriteLine(locationName);
+
+
+                    MongoCRUD db = new MongoCRUD("admin");
+
+                   // foreach (var location in locationName)
+                    //{
+                        VastTrafikModelLocation model = new VastTrafikModelLocation();
+
+                        model.name = locationName[key: "name"].ToString();
+                        model.lon = locationName[key: "lon"].ToObject<float>();
+                        model.lat = locationName[key: "lat"].ToObject<float>();
+                        Console.WriteLine(locationName[key: "name"]);
+                        Console.WriteLine(locationName[key: "lon"]);
+                        Console.WriteLine(locationName[key: "lat"]);
+
+                    db.InsertRecord("Locations_test", model);
+                   // }
+                }
+                else
+                {
+                    Console.Write("Fel vid kontakt med API");
+                    throw new Exception(response.ReasonPhrase);
+                }
+
+            }
         }
     }
 }
