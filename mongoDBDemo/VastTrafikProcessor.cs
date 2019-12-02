@@ -30,33 +30,37 @@ namespace mongoDBDemo
                     {
                         VastTrafikModelTrafficSituation model = new VastTrafikModelTrafficSituation();
 
-                        model.situationNumber = traffic[key: "situationNumber"].ToString();
-                        model.creationTime = traffic[key: "creationTime"].ToObject<DateTime>();
-                        model.startTime = traffic[key: "startTime"].ToObject<DateTime>();
-                        model.endTime = traffic[key: "endTime"].ToObject<DateTime>();
-                        model.severity = traffic[key: "severity"].ToString();
-                        model.title = traffic[key: "title"].ToString();
-                        model.description = traffic[key: "description"].ToString();
-                        // try
-                        //{
-                        //  var stopPoints = traffic[key: "affectedStopPoints"].ToObject<List<string>>();
-                        //Console.WriteLine(traffic[key: "affectedStopPoints"].ToObject<List<string>>());
+                        model.SituationNumber = traffic[key: "situationNumber"].ToString();
+                        model.CreationTime = traffic[key: "creationTime"].ToObject<DateTime>();
+                        model.StartTime = traffic[key: "startTime"].ToObject<DateTime>();
+                        model.EndTime = traffic[key: "endTime"].ToObject<DateTime>();
+                        model.Severity = traffic[key: "severity"].ToString();
+                        model.Title = traffic[key: "title"].ToString();
+                        model.Description = traffic[key: "description"].ToString();
+                        model.AffectedStopPoints = new List<AffectedStopPointsModel>();
 
-                        // foreach (var i in stopPoints)
-                        //{
 
-                        //  model.affectedStopPoints = i.ToObject<List<string>>();
-                        //Console.WriteLine(i);
-                        //}
-                        // }
-                        //catch
-                        //{
-                        //  break;
-                        // }
+                        JArray affectedStopPoints = JArray.Parse(traffic.SelectToken("affectedStopPoints").ToString());
 
-                        //model.affectedStopPoints = traffic[key: "affectedStopPoints"][0].ToObject<List<string>>();
+                        try
+                        {
+                            foreach (var stops in affectedStopPoints)
+                            {
+                                AffectedStopPointsModel modelaffected = new AffectedStopPointsModel();
+                                modelaffected.Name = stops[key: "name"].ToString();
+                                modelaffected.StopPointGid = stops[key: "gid"].ToObject<Int32>();
+                                modelaffected.MunicipalityName = stops[key: "municipalityName"].ToString();
 
-                       
+                                model.AffectedStopPoints.Add(modelaffected);
+                               
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("Catchen");
+                            break;
+                        }
+
                         db.InsertRecord("Traffic-Situations", model);
                     }
                 }
@@ -89,14 +93,14 @@ namespace mongoDBDemo
                     //{
                         VastTrafikModelLocation model = new VastTrafikModelLocation();
 
-                        model.name = locationName[key: "name"].ToString();
-                        model.lon = locationName[key: "lon"].ToObject<float>();
-                        model.lat = locationName[key: "lat"].ToObject<float>();
+                        model.Name = locationName[key: "name"].ToString();
+                        model.Lon = locationName[key: "lon"].ToObject<float>();
+                        model.Lat = locationName[key: "lat"].ToObject<float>();
                         Console.WriteLine(locationName[key: "name"]);
                         Console.WriteLine(locationName[key: "lon"]);
                         Console.WriteLine(locationName[key: "lat"]);
 
-                    db.InsertRecord("Locations_test", model);
+                    db.InsertRecord("Locations", model);
                    // }
                 }
                 else

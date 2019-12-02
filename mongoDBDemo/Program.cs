@@ -21,7 +21,7 @@ namespace mongoDBDemo
             //TrafikverketProcessor.PostTrafikVerket(Query.TrainStation());
 
             //VastTrafikProcessor.GetTrafficSituation();
-           VastTrafikProcessor.GetLocationName();
+           VastTrafikProcessor.GetTrafficSituation();
 
 
             // ändra västrafiks anrop
@@ -43,7 +43,7 @@ namespace mongoDBDemo
 
         public MongoCRUD(string database)
         {
-            var client = new MongoClient("mongodb://localhost:27017/admin");
+            var client = new MongoClient("mongodb://localhost:27017");
             db = client.GetDatabase(database);
 
         }
