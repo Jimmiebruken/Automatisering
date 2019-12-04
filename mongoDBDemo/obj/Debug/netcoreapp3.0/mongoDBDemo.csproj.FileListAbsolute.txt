@@ -78,3 +78,4 @@ C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\m
 C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.csproj.CopyComplete
 C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.dll
 C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\mongoDBDemo\obj\Debug\netcoreapp3.0\mongoDBDemo.pdb
+C:\Users\Victor\OneDrive\KYH - TT18\07 Testautomatisering\_CASE\MongoDB Master\mongoDBDemo\bin\Debug\netcoreapp3.0\RestSharp.dll

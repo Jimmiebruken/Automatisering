@@ -10,6 +10,7 @@ namespace mongoDBDemo
 {
     class VastTrafikProcessor
     {
+
         public static async void GetTrafficSituation()
         {
             string url = "https://api.vasttrafik.se/ts/v1/traffic-situations";
@@ -47,12 +48,18 @@ namespace mongoDBDemo
                             foreach (var stops in affectedStopPoints)
                             {
                                 AffectedStopPointsModel modelaffected = new AffectedStopPointsModel();
-                                modelaffected.Name = stops[key: "name"].ToString();
-                                modelaffected.StopPointGid = stops[key: "gid"].ToObject<Int32>();
-                                modelaffected.MunicipalityName = stops[key: "municipalityName"].ToString();
+                                modelaffected.Name = " " + stops[key: "name"].ToString() +" ";
+                                modelaffected.StopPointGid = " " + stops[key: "gid"].ToString() + " ";
+                                modelaffected.MunicipalityName = " " + stops[key: "municipalityName"].ToString() + " ";
 
                                 model.AffectedStopPoints.Add(modelaffected);
-                               
+
+                                StopPointNameMunicipalityModel stopName = new StopPointNameMunicipalityModel();
+                                stopName.Name = stops[key: "name"].ToString();
+                                stopName.MunicipalityName = stops[key: "municipalityName"].ToString();
+                                stopName.SituationNumber = model.SituationNumber.ToString();
+
+                                db.InsertRecord("Locationsss", stopName);
                             }
                         }
                         catch
@@ -60,8 +67,8 @@ namespace mongoDBDemo
                             Console.WriteLine("Catchen");
                             break;
                         }
-
                         db.InsertRecord("Traffic-Situations", model);
+                        
                     }
                 }
                 else
@@ -89,19 +96,14 @@ namespace mongoDBDemo
 
                     MongoCRUD db = new MongoCRUD("admin");
 
-                   // foreach (var location in locationName)
-                    //{
+          
                         VastTrafikModelLocation model = new VastTrafikModelLocation();
 
                         model.Name = locationName[key: "name"].ToString();
                         model.Lon = locationName[key: "lon"].ToObject<float>();
                         model.Lat = locationName[key: "lat"].ToObject<float>();
-                        Console.WriteLine(locationName[key: "name"]);
-                        Console.WriteLine(locationName[key: "lon"]);
-                        Console.WriteLine(locationName[key: "lat"]);
 
                     db.InsertRecord("Locations", model);
-                   // }
                 }
                 else
                 {

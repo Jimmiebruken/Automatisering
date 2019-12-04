@@ -16,12 +16,14 @@ namespace mongoDBDemo
             //startar en webclient
             ApiHelper.InitializeClientVastTrafik();
 
+            //ApiHelper.GetToken();
+
 
             //Kalla på metoden postrafikverket
-            //TrafikverketProcessor.PostTrafikVerket(Query.TrainStation());
+           // TrafikverketProcessor.PostTrainStation(Query.TrainStation());
 
-            //VastTrafikProcessor.GetTrafficSituation();
-           VastTrafikProcessor.GetTrafficSituation();
+            VastTrafikProcessor.GetTrafficSituation();
+          
 
 
             // ändra västrafiks anrop
@@ -43,7 +45,7 @@ namespace mongoDBDemo
 
         public MongoCRUD(string database)
         {
-            var client = new MongoClient("mongodb://localhost:27017");
+            var client = new MongoClient("mongodb://78.67.178.206:27017");
             db = client.GetDatabase(database);
 
         }

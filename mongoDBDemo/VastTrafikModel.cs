@@ -20,18 +20,24 @@ namespace mongoDBDemo
         public string Title { get; set; }
 
         public string Description { get; set; }
-        
+     
         public List<AffectedStopPointsModel> AffectedStopPoints { get; set; }
 
     }
 
     class AffectedStopPointsModel
     {
-        public Int32 StopPointGid { get; set; }
+        public string StopPointGid { get; set; }
         public string Name { get; set; }
         public string MunicipalityName { get; set; }
     }
 
+    class StopPointNameMunicipalityModel
+    {
+        public string Name { get; set; }
+        public string MunicipalityName { get; set; }
+        public string SituationNumber { get; set; }
+    }
 
 
     class VastTrafikModelLocation
