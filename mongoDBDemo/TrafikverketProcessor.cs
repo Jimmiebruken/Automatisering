@@ -38,6 +38,33 @@ namespace mongoDBDemo
             }
 
         }
+        
+        public static async void PostTrainAnnouncement(HttpContent data)
+        {
+            string url = "https://api.trafikinfo.trafikverket.se/v2/data.json";
+
+
+            using HttpResponseMessage response = await ApiHelper.ApiClient.PostAsync(url, data);
+            if (response.IsSuccessStatusCode)
+            {
+                string fromTrafikverket = await response.Content.ReadAsStringAsync();
+                JObject jsonObject = JObject.Parse(fromTrafikverket);
+
+                string test= jsonObject.ToString();
+                Console.WriteLine(test);
+
+
+
+
+            }
+            else
+            {
+
+                throw new Exception(response.ReasonPhrase);
+
+            }
+
+        }
 
         public static async void PostTrainStation(HttpContent data)
 
@@ -67,6 +94,8 @@ namespace mongoDBDemo
                         
                         model.AdvertisedLocationName = message[key: "AdvertisedLocationName"].ToString();
                         model.LocationSignature = message[key: "LocationSignature"].ToString();
+
+
 
                         try
                         {
@@ -167,6 +196,7 @@ namespace mongoDBDemo
                         model.ModifiedTime = message[key: "ModifiedTime"].ToString();
                         model.AffectedLocation = message[key: "AffectedLocation"].ToObject<List<string>>();
 
+                        
 
                         // försöker lägga till EndDate om detta finns annars skriver ut felmedelande i consolen
                         try

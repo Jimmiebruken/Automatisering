@@ -11,8 +11,9 @@ namespace mongoDBDemo
 
         // Modell som används sen när data skickas till MongoDB, Värden som sätts här men inte skickas med till MongoDB får värdet null
         // !OBS! Packa upp array med forloop, array/list in i db skapar krash
-        
 
+        
+        public string _id { get; }
 
         public string AdvertisedLocationName { get; set; }
         public string LocationSignature { get; set; }
