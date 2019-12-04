@@ -22,19 +22,7 @@ namespace mongoDBDemo
             ApiClient.DefaultRequestHeaders.Accept.Clear();
         }
 
-        public static void InitializeClientVastTrafik()
-        {
-
-            ApiClient = new HttpClient();
-            ApiClient.DefaultRequestHeaders.Accept.Clear();
-
-
-            ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "578c9b45-e494-3453-9ca4-35d3063cc8c6");
-
-        }
-
-
-        public static async void GetToken()
+        public static void GetToken()
         {
             var client = new RestClient("https://api.vasttrafik.se/token");
             var request = new RestRequest(Method.POST);
@@ -42,14 +30,16 @@ namespace mongoDBDemo
             request.AddHeader("Authorization", "basic UXU0Y1NVb2JOR3hGNWlwSDFCUnRmNzJMUFlNYTp0MWxXWEVCVEl0ZlNiZmFHTE1qaXA2UmZXU01h");
             request.AddParameter("application/json","grant_type=client_credentials&scope=device_12345", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            Console.WriteLine(response);
 
+            string test = response.Content;
+            JObject jsonObject = JObject.Parse(test);
 
+            string token = jsonObject.SelectToken("access_token").ToString();
 
+            ApiClient = new HttpClient();
+            ApiClient.DefaultRequestHeaders.Accept.Clear();
+
+            ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
         }
-    }
-
-    public interface IHttpActionResult
-    {
     }
 }

@@ -10,20 +10,16 @@ namespace mongoDBDemo
 {
     class VastTrafikProcessor
     {
-
         public static async void GetTrafficSituation()
         {
             string url = "https://api.vasttrafik.se/ts/v1/traffic-situations";
             using (HttpResponseMessage response = await ApiHelper.ApiClient.GetAsync(url))
-
             {
                 if (response.IsSuccessStatusCode)
                 {
                     string fromVastTrafik = await response.Content.ReadAsStringAsync();
 
                     JArray trafficSituation = JArray.Parse(fromVastTrafik);
-
-                    //Console.WriteLine(trafficSituation[0].Type);
 
                     MongoCRUD db = new MongoCRUD("admin");
 
@@ -40,7 +36,6 @@ namespace mongoDBDemo
                         model.Description = traffic[key: "description"].ToString();
                         model.AffectedStopPoints = new List<AffectedStopPointsModel>();
 
-
                         JArray affectedStopPoints = JArray.Parse(traffic.SelectToken("affectedStopPoints").ToString());
 
                         try
@@ -48,9 +43,9 @@ namespace mongoDBDemo
                             foreach (var stops in affectedStopPoints)
                             {
                                 AffectedStopPointsModel modelaffected = new AffectedStopPointsModel();
-                                modelaffected.Name = " " + stops[key: "name"].ToString() +" ";
-                                modelaffected.StopPointGid = " " + stops[key: "gid"].ToString() + " ";
-                                modelaffected.MunicipalityName = " " + stops[key: "municipalityName"].ToString() + " ";
+                                modelaffected.Name = stops[key: "name"].ToString();
+                                modelaffected.StopPointGid = stops[key: "gid"].ToString();
+                                modelaffected.MunicipalityName = stops[key: "municipalityName"].ToString();
 
                                 model.AffectedStopPoints.Add(modelaffected);
 
@@ -75,10 +70,8 @@ namespace mongoDBDemo
                 {
                     Console.Write("Fel vid kontakt med API");
                     throw new Exception(response.ReasonPhrase);
-
                 }
             }
-
         }
         public static async void GetLocationName()
         {
@@ -93,10 +86,8 @@ namespace mongoDBDemo
                     var locationName = jsonObject.SelectToken("LocationList").SelectToken("StopLocation")[0];
                     Console.WriteLine(locationName);
 
-
                     MongoCRUD db = new MongoCRUD("admin");
 
-          
                         VastTrafikModelLocation model = new VastTrafikModelLocation();
 
                         model.Name = locationName[key: "name"].ToString();
