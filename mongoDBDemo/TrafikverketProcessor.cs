@@ -16,7 +16,7 @@ namespace mongoDBDemo
 
     class TrafikverketProcessor
     {
-        public async Task<TrafikverketModel> LoadTrafikVerket()
+        public async Task<TrafikverketTrainStationModel> LoadTrafikVerket()
         {
             string url = "https://api.trafikinfo.trafikverket.se/v2/data.json";
 
@@ -25,7 +25,7 @@ namespace mongoDBDemo
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    TrafikverketModel trafikverket = await response.Content.ReadAsAsync<TrafikverketModel>();
+                    TrafikverketTrainStationModel trafikverket = await response.Content.ReadAsAsync<TrafikverketTrainStationModel>();
 
                     return trafikverket;
                 }
@@ -39,31 +39,103 @@ namespace mongoDBDemo
 
         }
         
+        public static void LoopTrainAnnouncement()
+        {
+            IList<string> signList = new List<string>();
+
+            signList = MongoCRUD.FindStationSign("14");
+            foreach (var sign in signList)
+            {
+                TrafikverketProcessor.PostTrainAnnouncement(Query.TrainAnnouncement(sign));
+            }
+            
+        }
+
         public static async void PostTrainAnnouncement(HttpContent data)
         {
             string url = "https://api.trafikinfo.trafikverket.se/v2/data.json";
 
 
-            using HttpResponseMessage response = await ApiHelper.ApiClient.PostAsync(url, data);
-            if (response.IsSuccessStatusCode)
+            using (HttpResponseMessage response = await ApiHelper.ApiClient.PostAsync(url, data))
             {
-                string fromTrafikverket = await response.Content.ReadAsStringAsync();
-                JObject jsonObject = JObject.Parse(fromTrafikverket);
+                if (response.IsSuccessStatusCode)
+                {
+                    string fromTrafikverket = await response.Content.ReadAsStringAsync();
+                    JObject jsonObject = JObject.Parse(fromTrafikverket);
 
-                string test= jsonObject.ToString();
-                Console.WriteLine(test);
+                    var trainAnnouncements = jsonObject.SelectToken("RESPONSE").SelectToken("RESULT")[0].SelectToken("TrainAnnouncement");
+                    MongoCRUD db = new MongoCRUD("admin");
+
+                    foreach( var announcement in trainAnnouncements)
+                    {
+                        TrafikverketTrainAnnouncementModel model = new TrafikverketTrainAnnouncementModel();
+
+                        try
+                        {
+                            try { model.ActivityId = announcement[key: "ActivityId"].ToString(); } catch { }
+
+                            try { model.AdvertisedTimeAtLocation = announcement[key: "AdvertisedTimeAtLocation"].ToObject<DateTime>(); } catch { }
+                            try { model.EstimatedTimeAtLocation = announcement[key: "EstimatedTimeAtLocation"].ToObject<DateTime>(); }
+                            // för många poster utan estimatedTimeAtLocation, skippar loggning av fel
+                            catch { }
+                            try { model.Canceled = announcement[key: "Canceled"].ToObject<bool>(); } catch { }
+                            try { model.InformationOwner = announcement[key: "InformationOwner"].ToString(); } catch {}
+                            try { model.LocationSignature = announcement[key: "LocationSignature"].ToString(); } catch {}
+                            
+                            
+                            try 
+                            {
+                                var token = announcement[key: "FromLocation"][0];
+                                string stringFromLocation = token.First.ToString();
+                                stringFromLocation = Regex.Replace(stringFromLocation, "\"", "");
+                                string[] substring = Regex.Split(stringFromLocation, " ");
+                                model.FromLocation = substring[1];
+                            } catch {  }
+
+                            try
+                            {
+                                var token = announcement[key: "ToLocation"][0];
+                                string stringToLocation = token.First.ToString();
+                                stringToLocation = Regex.Replace(stringToLocation, "\"", "");
+                                string[] substring = Regex.Split(stringToLocation, " ");
+                                model.ToLocation = substring[1];
+                            }
+                            catch
+                            {
+                               
+                            }
+
+                            try
+                            {
+                                model.Deviation = announcement[key: "Deviation"][0].ToString();
+                                Console.WriteLine(announcement[key: "Deviation"]);
+                                Console.WriteLine(announcement[key: "Deviation"][0]);
+                            }
+                            catch
+                            {
+
+                            }
+
+                            db.InsertRecord("TrainAnnouncement", model);
+                        }
+                        catch
+                        {
+                            Console.WriteLine("error reading/writing");
+                        }
+                        
+                    }
 
 
 
 
+                }
+                else
+                {
+
+                    throw new Exception(response.ReasonPhrase);
+
+                }
             }
-            else
-            {
-
-                throw new Exception(response.ReasonPhrase);
-
-            }
-
         }
 
         public static async void PostTrainStation(HttpContent data)
@@ -89,7 +161,7 @@ namespace mongoDBDemo
                     MongoCRUD db = new MongoCRUD("admin");
                     foreach (var message in trainStations)
                     {
-                        TrafikverketModel model = new TrafikverketModel();
+                        TrafikverketTrainStationModel model = new TrafikverketTrainStationModel();
 
                         
                         model.AdvertisedLocationName = message[key: "AdvertisedLocationName"].ToString();
@@ -167,7 +239,7 @@ namespace mongoDBDemo
                     MongoCRUD db = new MongoCRUD("admin");
                     foreach (var message in trainMessage)
                     {
-                        TrafikverketModelTrainMessage model = new TrafikverketModelTrainMessage();
+                        TrafikverketTrainMessageModel model = new TrafikverketTrainMessageModel();
 
                         // sätter in alla värden enligt modellen i TrafikverketModel
                         //model.EventId = message[key: "EventId"].ToString();

@@ -6,7 +6,20 @@ using System.Text;
 
 namespace mongoDBDemo
 {
-    public class TrafikverketModel
+    public class TrafikverketTrainAnnouncementModel
+    {
+        public string ActivityId { get; set; }
+        public bool Canceled { get; set; }
+        public DateTime AdvertisedTimeAtLocation { get; set; }
+        public DateTime EstimatedTimeAtLocation { get; set; }
+        public string Deviation { get; set; }
+        public string LocationSignature { get; set; }
+        public string InformationOwner { get; set; }
+        public string FromLocation { get; set; }
+        public string ToLocation { get; set; }
+
+    }
+    public class TrafikverketTrainStationModel
     {
 
         // Modell som används sen när data skickas till MongoDB, Värden som sätts här men inte skickas med till MongoDB får värdet null
@@ -29,7 +42,7 @@ namespace mongoDBDemo
     }
 
 
-    public class TrafikverketModelTrainMessage
+    public class TrafikverketTrainMessageModel
     {
 
 

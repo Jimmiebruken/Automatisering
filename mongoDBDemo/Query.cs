@@ -9,7 +9,7 @@ namespace mongoDBDemo
     {
         public static string apikey = "'6bb34852b5b140e69f3eec606ea04220'";
 
-        public static StringContent TrainAnnouncement()
+        public static StringContent TrainAnnouncement(string locationSignature)
         {
 
             // sätter query i en string
@@ -18,7 +18,32 @@ namespace mongoDBDemo
                                          "<LOGIN authenticationkey=" + apikey + "/>" +
                         "<QUERY objecttype='TrainAnnouncement' schemaversion='1.6'>" +
                                             "<FILTER>" +
+                                            "<AND>"+
+                                            "<EQ name = 'ActivityType' value = 'Avgang' />" +
+                                            "<EQ name = 'LocationSignature' value = '"+ locationSignature +"'/>" +
+                                        "<OR>" +
+                                        "<AND>"+
+      
+                                          "<GT name = 'AdvertisedTimeAtLocation' value = '$dateadd(-00:15:00)' />"+
+                                             "<LT name = 'AdvertisedTimeAtLocation' value = '$dateadd(14:00:00)' />"+
+            
+                                          "</AND>"+
+                                          "<AND>"+
+                                                "<LT name = 'AdvertisedTimeAtLocation' value = '$dateadd(00:30:00)' />"+
+                                                   "<GT name = 'EstimatedTimeAtLocation' value = '$dateadd(-00:15:00)' />"+
+                                                "</AND>"+
+                                          "</OR>"+
+                                          "</AND>" +
                                             "</FILTER>" +
+                                            "<INCLUDE>ActivityId</INCLUDE>"+
+                                            "<INCLUDE>Canceled</INCLUDE>"+
+                                            "<INCLUDE>AdvertisedTimeAtLocation</INCLUDE>"+
+                                            "<INCLUDE>EstimatedTimeAtLocation</INCLUDE>"+
+                                            "<INCLUDE>Deviation</INCLUDE>"+
+                                            "<INCLUDE>LocationSignature</INCLUDE>"+
+                                            "<INCLUDE>InformationOwner</INCLUDE>"+
+                                            "<INCLUDE>FromLocation</INCLUDE>"+
+                                            "<INCLUDE>ToLocation</INCLUDE>"+
                                         "</QUERY>" +
                                     "</REQUEST>";
 

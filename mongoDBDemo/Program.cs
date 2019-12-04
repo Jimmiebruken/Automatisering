@@ -16,17 +16,19 @@ namespace mongoDBDemo
         {
             MongoCRUD db = new MongoCRUD("admin");
 
-            ApiHelper.GetToken();
+            ApiHelper.InitializeClient();
+            //ApiHelper.GetToken();
             //startar en webclient
-           // ApiHelper.InitializeClientVastTrafik();
+            //ApiHelper.InitializeClientVastTrafik();
 
-            
 
+            TrafikverketProcessor.LoopTrainAnnouncement();
+            //TrafikverketProcessor.PostTrainAnnouncement(Query.TrainAnnouncement("F"));
 
             //Kalla på metoden postrafikverket
            // TrafikverketProcessor.PostTrainStation(Query.TrainStation());
 
-            VastTrafikProcessor.GetLocationName();
+            //VastTrafikProcessor.GetLocationName();
             
            // var testlist = db.FindRecord<string>("Locationsss", "Name", "Västra Parken");
            // Console.WriteLine(testlist);
@@ -38,42 +40,8 @@ namespace mongoDBDemo
         }
     }
 
-
-    // MongoCRUD sköter kontakten med DB, OBS! DB IP är satt till LAN! Public MONGODB IP är 78.67.178.206
-    public class MongoCRUD
-    {
-        private IMongoDatabase db;
-
-        public MongoCRUD(string database)
-        {
-            var client = new MongoClient("mongodb://78.67.178.206:27017");
-            db = client.GetDatabase(database);
-
-        }
-
-        public void InsertRecord<T>(string table, T record)
-        {
-            var collection = db.GetCollection<T>(table);
-            collection.InsertOne(record);
-        }
-
-        public void DeleteRecord<T>(string table, Guid id)
-        {
-            var collection = db.GetCollection<T>(table);
-            var filter = Builders<T>.Filter.Eq("Id", id);
-        }
-
-        public List<T> FindRecord<T>(string table, string findIndex, string searchString)
-        {
-            var collection = db.GetCollection<T>(table);
-            var filter = Builders<T>.Filter.Eq(findIndex, searchString);
-
-            return collection.Find(filter).ToList();
-
-          
-        }
-
-    }
+    
+    
 
 
 
