@@ -3,6 +3,9 @@ using MongoDB.Driver;
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace mongoDBDemo
 {
@@ -13,22 +16,22 @@ namespace mongoDBDemo
         {
             MongoCRUD db = new MongoCRUD("admin");
 
+            ApiHelper.GetToken();
             //startar en webclient
-            ApiHelper.InitializeClientVastTrafik();
+           // ApiHelper.InitializeClientVastTrafik();
+
+            
 
 
             //Kalla på metoden postrafikverket
-            //TrafikverketProcessor.PostTrafikVerket(Query.TrainStation());
+           // TrafikverketProcessor.PostTrainStation(Query.TrainStation());
 
-            //VastTrafikProcessor.GetTrafficSituation();
-           VastTrafikProcessor.GetLocationName();
-
-
-            // ändra västrafiks anrop
-            //db.InsertRecord("test", VastTrafik.LoadVastTrafik());
-            //Console.WriteLine(VastTrafik.LoadVastTrafik());
-
-
+            VastTrafikProcessor.GetLocationName();
+            
+           // var testlist = db.FindRecord<string>("Locationsss", "Name", "Västra Parken");
+           // Console.WriteLine(testlist);
+           
+      
             // Ligger endast för att blocka körningen från avslut ( för att kolla fel/ok medelanden)
             Console.ReadLine();
 
@@ -43,7 +46,7 @@ namespace mongoDBDemo
 
         public MongoCRUD(string database)
         {
-            var client = new MongoClient("mongodb://localhost:27017/admin");
+            var client = new MongoClient("mongodb://78.67.178.206:27017");
             db = client.GetDatabase(database);
 
         }
@@ -58,6 +61,16 @@ namespace mongoDBDemo
         {
             var collection = db.GetCollection<T>(table);
             var filter = Builders<T>.Filter.Eq("Id", id);
+        }
+
+        public List<T> FindRecord<T>(string table, string findIndex, string searchString)
+        {
+            var collection = db.GetCollection<T>(table);
+            var filter = Builders<T>.Filter.Eq(findIndex, searchString);
+
+            return collection.Find(filter).ToList();
+
+          
         }
 
     }
