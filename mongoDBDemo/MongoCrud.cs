@@ -24,12 +24,27 @@ namespace mongoDBDemo
             var collection = db.GetCollection<T>(table);
             collection.InsertOne(record);
         }
+        public async Task Upsert(string  table, TrafikverketTrainAnnouncementModel record, string ActivityId)
+        {
+            var collection = db.GetCollection<TrafikverketTrainAnnouncementModel>(table);
+
+
+            collection.ReplaceOne(filter: (u => u.ActivityId  == ActivityId),options: new UpdateOptions { IsUpsert = true }, replacement: record);
+        }
+        public async Task Upsert(string table, TrafikverketTrainMessageModel record, string EventId)
+        {
+            var collection = db.GetCollection<TrafikverketTrainMessageModel>(table);
+
+
+            collection.ReplaceOne(filter: (u => u.EventId == EventId), options: new UpdateOptions { IsUpsert = true }, replacement: record);
+        }
+
 
         public async Task FindRecord(string search)
         {
 
             // skriv in vilken model och tabell som ska hämtas
-            var collection = db.GetCollection<TrafikverketTrainStationModel>("Station");
+            var collection = db.GetCollection<TrafikverketTrainStationModel>(Trafikverket.station);
 
             // b är en instans av modellen som ska användas. jämförelse operatorer kan användas för sökningen (utöka med && and funktion möjligt???)
             // jämförelse sker mot "search" variablen som skickas in i funktionen
@@ -51,7 +66,7 @@ namespace mongoDBDemo
         {
 
          
-            var collection = db.GetCollection<TrafikverketTrainStationModel>("Station");
+            var collection = db.GetCollection<TrafikverketTrainStationModel>(Trafikverket.station);
 
             IList<string> signList = new List<string>();
 
@@ -69,6 +84,9 @@ namespace mongoDBDemo
 
 
         }
+
+
+
 
     }
 }
