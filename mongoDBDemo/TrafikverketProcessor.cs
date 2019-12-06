@@ -108,15 +108,15 @@ namespace mongoDBDemo
                             try
                             {
                                 model.Deviation = announcement[key: "Deviation"][0].ToString();
-                                Console.WriteLine(announcement[key: "Deviation"]);
-                                Console.WriteLine(announcement[key: "Deviation"][0]);
+                                
                             }
                             catch
                             {
 
                             }
 
-                            db.InsertRecord("TrainAnnouncement", model);
+                            await db.Upsert(Trafikverket.trainAnnouncement, model, model.ActivityId);
+                            //db.InsertRecord("TrainAnnouncement", model);
                         }
                         catch
                         {
@@ -202,7 +202,8 @@ namespace mongoDBDemo
 
                         
 
-                        db.InsertRecord("Station", model);
+                        db.InsertRecord(Trafikverket.station, model);
+                       
 
                     }
 
@@ -278,11 +279,11 @@ namespace mongoDBDemo
                         
                         catch
                         {
-                            Console.WriteLine("No endate time set for model");
+                            //Console.WriteLine("No endate time set for model");
                         }
 
-                        db.InsertRecord("TrainMessage", model);
-
+                        //db.InsertRecord("TrainMessage", model);
+                        await db.Upsert(Trafikverket.trainMessage, model, model.EventId);
                     }
 
                 }
