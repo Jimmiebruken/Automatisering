@@ -23,6 +23,8 @@ namespace mongoDBDemo
             //ApiHelper.InitializeClientVastTrafik();
 
 
+
+           
             
             //TrafikverketProcessor.PostTrainAnnouncement(Query.TrainAnnouncement("F"));
 
