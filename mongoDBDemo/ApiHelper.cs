@@ -22,13 +22,26 @@ namespace mongoDBDemo
             ApiClient.DefaultRequestHeaders.Accept.Clear();
         }
 
+      
+    }
+
+    public static class ApiHelperVasttrafik
+    {
+        public static HttpClient ApiClient { get; set; }
+
+        public static void InitializeClient()
+        {
+            ApiClient = new HttpClient();
+            ApiClient.DefaultRequestHeaders.Accept.Clear();
+        }
+
         public static void GetToken()
         {
             var client = new RestClient("https://api.vasttrafik.se/token");
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
             request.AddHeader("Authorization", "basic UXU0Y1NVb2JOR3hGNWlwSDFCUnRmNzJMUFlNYTp0MWxXWEVCVEl0ZlNiZmFHTE1qaXA2UmZXU01h");
-            request.AddParameter("application/json","grant_type=client_credentials&scope=device_12345", ParameterType.RequestBody);
+            request.AddParameter("application/json", "grant_type=client_credentials&scope=device_12345", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
 
             string test = response.Content;
