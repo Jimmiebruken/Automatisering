@@ -6,7 +6,7 @@ using System.Drawing;
 
 namespace mongoDBDemo
 {
-    class VastTrafikModelTrafficSituation
+    public class VastTrafikModelTrafficSituation
     {
         public string SituationNumber { get; set; }
         public DateTime CreationTime { get; set; }
@@ -25,22 +25,25 @@ namespace mongoDBDemo
 
     }
 
-    class AffectedStopPointsModel
+    public class AffectedStopPointsModel
     {
         public string StopPointGid { get; set; }
         public string Name { get; set; }
         public string MunicipalityName { get; set; }
+        
     }
 
-    class StopPointNameMunicipalityModel
+    public class StopPointNameMunicipalityModel
     {
         public string Name { get; set; }
         public string MunicipalityName { get; set; }
         public string SituationNumber { get; set; }
+        public float Lon { get; set; }
+        public float Lat { get; set; }
     }
 
 
-    class VastTrafikModelLocation
+    public class VastTrafikModelLocation
     {
         public string Name { get; set; }
         public float Lon { get; set; }

@@ -8,14 +8,19 @@ namespace mongoDBDemo
     {
 
         // Trafikverket PageObjects
-        public static string station = "Trafikverket Station";
-        public static string trainAnnouncement = "Trafikverket Train Announcement";
-        public static string trainMessage = "Trafikverket Train Message";
+        public static string station = "Trafikverket-Station";
+        public static string trainAnnouncement = "Trafikverket-Announcement";
+        public static string trainMessage = "Trafikverket-Message";
 
 
     }
     public static class Vasttrafik
     {
+        public static string affectedLocation = "Vasttrafik-Affected-Location";
+        public static string locations = "Vasttrafik-Location"; 
+        public static string traficSituation = "Vasttrafik-Traffic-Situation";
+
+
 
     }
 
