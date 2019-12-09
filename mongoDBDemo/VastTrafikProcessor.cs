@@ -36,14 +36,17 @@ namespace mongoDBDemo
                         model.Description = traffic[key: "description"].ToString();
                         model.AffectedStopPoints = new List<AffectedStopPointsModel>();
 
-                        JArray affectedStopPoints = JArray.Parse(traffic.SelectToken("affectedStopPoints").ToString());
+                        
 
                         try
                         {
+                            JArray affectedStopPoints = JArray.Parse(traffic.SelectToken("affectedStopPoints").ToString());
+
                             foreach (var stops in affectedStopPoints)
                             {
                                 AffectedStopPointsModel modelaffected = new AffectedStopPointsModel();
                                 modelaffected.Name = stops[key: "name"].ToString();
+
                                 modelaffected.StopPointGid = stops[key: "gid"].ToString();
                                 modelaffected.MunicipalityName = stops[key: "municipalityName"].ToString();
 
@@ -54,6 +57,27 @@ namespace mongoDBDemo
                                 stopName.MunicipalityName = stops[key: "municipalityName"].ToString();
                                 stopName.SituationNumber = model.SituationNumber.ToString();
 
+                                try
+                                {
+                                    JArray affectedLines = JArray.Parse(traffic.SelectToken("affectedLines").ToString());
+                                    Console.WriteLine(affectedLines);
+
+                                    foreach (var stop in affectedLines)
+                                    {
+
+                                        
+                                        stopName.TransportAuthorityName = stop[key: "transportAuthorityName"].ToString();
+                                        stopName.DefaultTransportModeCode = stop[key: "defaultTransportModeCode"].ToString();
+                                        
+
+                                        
+                                    }
+                                }
+                                catch
+                                {
+                                    Console.WriteLine("affectedLines Error");
+                                    break;
+                                }
 
 
                                 GetGeo(stopName, stopName.Name, stopName.MunicipalityName);
@@ -65,6 +89,36 @@ namespace mongoDBDemo
                             Console.WriteLine("Catchen");
                             break;
                         }
+
+
+                        
+                        /*
+                        try
+                        {
+                            JArray affectedLines = JArray.Parse(traffic.SelectToken("affectedLines").ToString());
+                            Console.WriteLine(affectedLines);
+
+                            foreach (var stop in affectedLines)
+                            {
+
+                                StopPointNameMunicipalityModel modelaffected = new StopPointNameMunicipalityModel();
+                                modelaffected.TransportAuthorityName = stop[key: "transportAuthorityName"].ToString();
+                                modelaffected.DefaultTransportModeCode = stop[key: "defaultTransportModeCode"].ToString();
+                                modelaffected.SituationNumber = model.SituationNumber.ToString();
+
+                                await db.Upsert(Vasttrafik.affectedLocation, modelaffected);
+                            }
+                        }
+                        catch
+                        {
+                            Console.WriteLine("affectedLines Error");
+                            break;
+                        }
+                        */
+    
+
+
+
                         await db.Upsert(Vasttrafik.traficSituation, model);
                         
                     }
@@ -89,8 +143,7 @@ namespace mongoDBDemo
                     JObject jsonObject = JObject.Parse(fromVastTrafik);
 
                     var locationName = jsonObject.SelectToken("LocationList").SelectToken("StopLocation")[0];
-                    Console.WriteLine(locationName);
-
+                    
                     MongoCRUD db = new MongoCRUD("admin");
 
                         VastTrafikModelLocation model = new VastTrafikModelLocation();

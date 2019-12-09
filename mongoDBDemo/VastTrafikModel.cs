@@ -33,6 +33,8 @@ namespace mongoDBDemo
         
     }
 
+    
+
     public class StopPointNameMunicipalityModel
     {
         public string Name { get; set; }
@@ -40,6 +42,8 @@ namespace mongoDBDemo
         public string SituationNumber { get; set; }
         public float Lon { get; set; }
         public float Lat { get; set; }
+        public string DefaultTransportModeCode { get; set; }
+        public string TransportAuthorityName { get; set; }
     }
 
 

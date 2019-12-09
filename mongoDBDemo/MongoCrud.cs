@@ -54,6 +54,24 @@ namespace mongoDBDemo
             collection.ReplaceOne(filter: (u => u.SituationNumber == record.SituationNumber), options: new UpdateOptions { IsUpsert = true }, replacement: record);
         }
 
+        
+        public async Task UpsertAffectedLines(string table, StopPointNameMunicipalityModel record)
+        {
+            var collection = db.GetCollection<StopPointNameMunicipalityModel>(table);
+
+            
+
+            //IList<string> signList = new List<string>();
+
+            //var dokuments = collection.Find(b => b.SituationNumber == record.SituationNumber).ToListAsync().Result;
+
+            
+
+            collection.UpdateMany(filter: (u => u.SituationNumber == record.SituationNumber), update: record.TransportAuthorityName);
+            collection.UpdateMany(filter: (u => u.SituationNumber == record.SituationNumber), update: record.TransportAuthorityName);
+        }
+        
+
         public async Task FindRecord(string search)
         {
 
