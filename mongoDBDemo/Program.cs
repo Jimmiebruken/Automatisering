@@ -45,10 +45,10 @@ namespace mongoDBDemo
             timer.Elapsed += OnTimedEvent;
             timer.Enabled = true;
 
-
+           
 
             // Ligger endast för att blocka körningen från avslut ( för att kolla fel/ok medelanden)
-            Console.WriteLine("Script has started - press any key to exit");
+            Console.WriteLine("Trafikverket script");
             Console.ReadLine();
             
 
@@ -58,7 +58,7 @@ namespace mongoDBDemo
         // funktionen blir kallad varje gång timern har räknat ner, kalla endast på huvudfunktionerna här
         public static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            int choice = 1;
+            int choice = 0;
             if(choice == 0)
             {
                 ApiHelper.InitializeClient();
