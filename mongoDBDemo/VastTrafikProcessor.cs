@@ -60,7 +60,7 @@ namespace mongoDBDemo
                                 try
                                 {
                                     JArray affectedLines = JArray.Parse(traffic.SelectToken("affectedLines").ToString());
-                                    Console.WriteLine(affectedLines);
+                                    
 
                                     foreach (var stop in affectedLines)
                                     {
@@ -170,41 +170,44 @@ namespace mongoDBDemo
 
         public static async void GetGeo(StopPointNameMunicipalityModel model, string street, string municipality)
         {
-
-            string url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=" + street + "%20" + municipality + "&format=json";
-            //string url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=sanneg%C3%A5rdshamnen&format=json";
-            using (HttpResponseMessage response = await ApiHelperVasttrafik.ApiClient.GetAsync(url))
+            try
             {
-                if (response.IsSuccessStatusCode)
+                string url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=" + street + "%20" + municipality + "&format=json";
+                //string url = "https://api.vasttrafik.se/bin/rest.exe/v2/location.name?input=sanneg%C3%A5rdshamnen&format=json";
+                using (HttpResponseMessage response = await ApiHelperVasttrafik.ApiClient.GetAsync(url))
                 {
-                    string fromVastTrafik = await response.Content.ReadAsStringAsync();
-                    JObject jsonObject = JObject.Parse(fromVastTrafik);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string fromVastTrafik = await response.Content.ReadAsStringAsync();
+                        JObject jsonObject = JObject.Parse(fromVastTrafik);
 
-                    var locationName = jsonObject.SelectToken("LocationList").SelectToken("StopLocation")[0];
-                    //Console.WriteLine(model);
+                        var locationName = jsonObject.SelectToken("LocationList").SelectToken("StopLocation")[0];
+                        //Console.WriteLine(model);
 
-                    MongoCRUD db = new MongoCRUD("admin");
-
-
-
-                    model.Lon = locationName[key: "lon"].ToObject<float>();
-                    model.Lat = locationName[key: "lat"].ToObject<float>();
-
-                    //Tuple coordReturn = new Tuple(longitude, latitude);
+                        MongoCRUD db = new MongoCRUD("admin");
 
 
 
+                        model.Lon = locationName[key: "lon"].ToObject<float>();
+                        model.Lat = locationName[key: "lat"].ToObject<float>();
 
-                    await db.Upsert(Vasttrafik.affectedLocation, model);
+                        //Tuple coordReturn = new Tuple(longitude, latitude);
+
+
+
+
+                        await db.Upsert(Vasttrafik.affectedLocation, model);
+                    }
+                    else
+                    {
+                        Console.Write("Fel vid kontakt med Västtrafik API");
+                        Console.WriteLine(response.ReasonPhrase);
+                        //throw new Exception(response.ReasonPhrase);
+                    }
+
                 }
-                else
-                {
-                    Console.Write("Fel vid kontakt med Västtrafik API");
-                    Console.WriteLine(response.ReasonPhrase);
-                    //throw new Exception(response.ReasonPhrase);
-                }
-
             }
+            catch { }
         }
     }
 }

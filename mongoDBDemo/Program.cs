@@ -48,7 +48,7 @@ namespace mongoDBDemo
            
 
             // Ligger endast för att blocka körningen från avslut ( för att kolla fel/ok medelanden)
-            Console.WriteLine("Trafikverket script");
+            
             Console.ReadLine();
             
 
@@ -58,20 +58,21 @@ namespace mongoDBDemo
         // funktionen blir kallad varje gång timern har räknat ner, kalla endast på huvudfunktionerna här
         public static void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
         {
-            int choice = 0;
-            if(choice == 0)
-            {
-                ApiHelper.InitializeClient();
-                TrafikverketProcessor.LoopTrainAnnouncement();
-                TrafikverketProcessor.PostTrainMessage(Query.TrainMessage());
-            }
-            else
+                 
+            ApiHelper.InitializeClient();
+            TrafikverketProcessor.LoopTrainAnnouncement();
+            TrafikverketProcessor.PostTrainMessage(Query.TrainMessage());
+
+            try
             {
                 ApiHelperVasttrafik.GetToken();
                 VastTrafikProcessor.GetTrafficSituation();
             }
-            
+            catch { }
+
             Console.WriteLine("one batch completed, waiting for next batch");
+            
+          
         }
     }
 

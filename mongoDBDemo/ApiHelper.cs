@@ -37,6 +37,7 @@ namespace mongoDBDemo
 
         public static void GetToken()
         {
+            
             var client = new RestClient("https://api.vasttrafik.se/token");
             var request = new RestRequest(Method.POST);
             request.AddHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -53,6 +54,7 @@ namespace mongoDBDemo
             ApiClient.DefaultRequestHeaders.Accept.Clear();
 
             ApiClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+            
         }
     }
 }
