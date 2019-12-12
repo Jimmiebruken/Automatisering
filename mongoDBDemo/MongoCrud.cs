@@ -31,12 +31,12 @@ namespace mongoDBDemo
 
             collection.ReplaceOne(filter: (u => u.ActivityId  == ActivityId),options: new UpdateOptions { IsUpsert = true }, replacement: record);
         }
-        public async Task Upsert(string table, TrafikverketTrainMessageModel record, string EventId)
+        public async Task Upsert(string table, TrafikverketTrainMessageModel record)
         {
             var collection = db.GetCollection<TrafikverketTrainMessageModel>(table);
 
 
-            collection.ReplaceOne(filter: (u => u.EventId == EventId), options: new UpdateOptions { IsUpsert = true }, replacement: record);
+            collection.ReplaceOne(filter: (u => u.EventId == record.EventId), options: new UpdateOptions { IsUpsert = true }, replacement: record);
         }
 
         public async Task Upsert(string table, StopPointNameMunicipalityModel record)
