@@ -51,50 +51,55 @@ namespace mongoDBDemo
 
                         try
                         {
-                            try { model.ActivityId = announcement[key: "ActivityId"].ToString(); } catch { }
+                            if (announcement[key: "ActivityId"].ToString() != null)
+                            {
+                                model.ActivityId = announcement[key: "ActivityId"].ToString(); 
 
-                            try { model.AdvertisedTimeAtLocation = announcement[key: "AdvertisedTimeAtLocation"].ToObject<DateTime>(); } catch { }
-                            try { model.EstimatedTimeAtLocation = announcement[key: "EstimatedTimeAtLocation"].ToObject<DateTime>(); }
-                            // för många poster utan estimatedTimeAtLocation, skippar loggning av fel
-                            catch { }
-                            try { model.Canceled = announcement[key: "Canceled"].ToObject<bool>(); } catch { }
-                            try { model.InformationOwner = announcement[key: "InformationOwner"].ToString(); } catch {}
-                            try { model.LocationSignature = announcement[key: "LocationSignature"].ToString(); } catch {}
-                            
-                            
-                            try 
-                            {
-                                var token = announcement[key: "FromLocation"][0];
-                                string stringFromLocation = token.First.ToString();
-                                stringFromLocation = Regex.Replace(stringFromLocation, "\"", "");
-                                string[] substring = Regex.Split(stringFromLocation, " ");
-                                model.FromLocation = substring[1];
-                            } catch {  }
+                                try { model.AdvertisedTimeAtLocation = announcement[key: "AdvertisedTimeAtLocation"].ToObject<DateTime>(); } catch { }
+                                try { model.EstimatedTimeAtLocation = announcement[key: "EstimatedTimeAtLocation"].ToObject<DateTime>(); }
+                                // för många poster utan estimatedTimeAtLocation, skippar loggning av fel
+                                catch { }
+                                try { model.Canceled = announcement[key: "Canceled"].ToObject<bool>(); } catch { }
+                                try { model.InformationOwner = announcement[key: "InformationOwner"].ToString(); } catch { }
+                                try { model.LocationSignature = announcement[key: "LocationSignature"].ToString(); } catch { }
 
-                            try
-                            {
-                                var token = announcement[key: "ToLocation"][0];
-                                string stringToLocation = token.First.ToString();
-                                stringToLocation = Regex.Replace(stringToLocation, "\"", "");
-                                string[] substring = Regex.Split(stringToLocation, " ");
-                                model.ToLocation = substring[1];
-                            }
-                            catch
-                            {
-                               
-                            }
 
-                            try
-                            {
-                                model.Deviation = announcement[key: "Deviation"][0].ToString();
+                                try
+                                {
+                                    var token = announcement[key: "FromLocation"][0];
+                                    string stringFromLocation = token.First.ToString();
+                                    stringFromLocation = Regex.Replace(stringFromLocation, "\"", "");
+                                    string[] substring = Regex.Split(stringFromLocation, " ");
+                                    model.FromLocation = substring[1];
+                                }
+                                catch { }
+
+                                try
+                                {
+                                    var token = announcement[key: "ToLocation"][0];
+                                    string stringToLocation = token.First.ToString();
+                                    stringToLocation = Regex.Replace(stringToLocation, "\"", "");
+                                    string[] substring = Regex.Split(stringToLocation, " ");
+                                    model.ToLocation = substring[1];
+                                }
+                                catch
+                                {
+
+                                }
+
                                 
-                            }
-                            catch
-                            {
+                                try
+                                {
+                                    model.Deviation = announcement[key: "Deviation"][0].ToString();
 
-                            }
+                                }
+                                catch
+                                {
 
-                            await db.Upsert(Trafikverket.trainAnnouncement, model, model.ActivityId);
+                                }
+
+                                await db.Upsert(Trafikverket.trainAnnouncement, model, model.ActivityId);
+                            }
                             //db.InsertRecord("TrainAnnouncement", model);
                         }
                         catch
@@ -111,7 +116,7 @@ namespace mongoDBDemo
                 else
                 {
 
-                    throw new Exception(response.ReasonPhrase);
+                    //throw new Exception(response.ReasonPhrase);
 
                 }
             }
@@ -223,7 +228,7 @@ namespace mongoDBDemo
 
                         // sätter in alla värden enligt modellen i TrafikverketModel
                         //model.EventId = message[key: "EventId"].ToString();
-                        //model.Header = message[key: "Header"].ToString();
+                        model.Header = message[key: "Header"].ToString();
                         model.ExternalDescription = message[key: "ExternalDescription"].ToString();
 
                         JToken geo = message[key: "Geometry"];
@@ -243,7 +248,7 @@ namespace mongoDBDemo
                         model.Longitude = float.Parse(coords[0], CultureInfo.InvariantCulture);
                         model.Latitude = float.Parse(coords[1], CultureInfo.InvariantCulture);
 
-
+                        model.EventId = message[key: "EventId"].ToString();
                         model.StartDateTime = message[key: "StartDateTime"].ToObject<DateTime>();
                         model.ModifiedTime = message[key: "ModifiedTime"].ToString();
                         model.AffectedLocation = message[key: "AffectedLocation"].ToObject<List<string>>();
@@ -262,7 +267,7 @@ namespace mongoDBDemo
                         }
 
                         //db.InsertRecord("TrainMessage", model);
-                        await db.Upsert(Trafikverket.trainMessage, model, model.EventId);
+                        await db.Upsert(Trafikverket.trainMessage, model);
                     }
 
                 }

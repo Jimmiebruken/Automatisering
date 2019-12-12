@@ -83,8 +83,8 @@ namespace mongoDBDemo
                                    "<LOGIN authenticationkey=" + apikey + "/>" +
                                    "<QUERY objecttype='TrainMessage' schemaversion='1.3'>" +
                                        "<FILTER>" +
-                                           "<IN name='CountyNo' value='14'/>" +
-                                       "</FILTER>" +
+                                           "<EQ name = 'CountyNo' value = '14' />"+
+                                          "</FILTER>" +
                                    "</QUERY>" +
                                "</REQUEST>";
 
